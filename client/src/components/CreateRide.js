@@ -119,7 +119,7 @@ export default class createRide extends Component {
                       required
                       className="form-control mb-1"
                       maxLength="254"
-                      pattern="[a-zA-Z0-9 ]+"
+                      // pattern="[a-zA-Z0-9 ]+"
                     ></input>
                     Terrain type
                     <input
