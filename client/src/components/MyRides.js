@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-// import MarkerLayer from "react-leaflet-marker-layer";
 import "./MyRides.css";
 
 const OCD_API_KEY = process.env.REACT_APP_KEY;
@@ -10,7 +9,6 @@ export default class MyRides extends Component {
     super(props);
     this.state = {
       myRideDetails: null,
-      markers: [[41.38879, 2.15899], [41.38679, 2.15899], [41.38679, 2.15499]]
     };
   }
 
@@ -31,11 +29,6 @@ export default class MyRides extends Component {
       myRideDetails: null,
     });
   }
-
-  // addMarker(){
-  //   const { markers } = this.state;
-  //   // markers.push(latlng);
-  // };
 
   render() {
     const { usersRides } = this.props;
@@ -71,18 +64,17 @@ export default class MyRides extends Component {
             </div>
               <div style={{backgroundColor: '#ccc'}}>
               <Map ref='map' center={[41.38879, 2.15899]}
-        onClick={this.addMarker}
-      zoom={15}
-      >
-        <TileLayer
-          url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png"
-          attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-
-            {this.state.markers.map((position, idx) => 
-              <Marker key={`marker-${idx}`} position={position}>
-              </Marker>
-            )}
+                onClick={this.addMarker}
+                zoom={15}
+              >
+                <TileLayer
+                  url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png"
+                  attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                {usersRides.map((ride, idx) => 
+                  <Marker key={`marker-${idx}`} position={[ride.lat, ride.lng]}>
+                  </Marker>
+                )}
             </Map>
             </div>
           </div>
