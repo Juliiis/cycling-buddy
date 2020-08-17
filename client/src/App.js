@@ -4,7 +4,7 @@ import CreateRide from "./components/CreateRide";
 import AllRides from "./components/AllRides";
 import MyRides from "./components/MyRides";
 
-class App extends React.Component {
+class App extends React.Component { 
   constructor(props) {
     super(props);
     this.state = {

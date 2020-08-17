@@ -10,7 +10,7 @@ export default class MyRides extends Component {
     super(props);
     this.state = {
       myRideDetails: null,
-      // markers:[]
+      markers: [[41.38879, 2.15899], [41.38679, 2.15899], [41.38679, 2.15499]]
     };
   }
 
@@ -34,7 +34,7 @@ export default class MyRides extends Component {
 
   // addMarker(){
   //   const { markers } = this.state;
-  //   markers.push(latlng);
+  //   // markers.push(latlng);
   // };
 
   render() {
@@ -45,8 +45,10 @@ export default class MyRides extends Component {
         <div className="row">
           <br />
         </div>
+
         <div className="row">
           <div className="col-6 ml-4 scrollableCol setHeight">
+            <div>
             {usersRides.map((ride) => {
               return (
                 <div
@@ -66,23 +68,27 @@ export default class MyRides extends Component {
                 </div>
               );
             })}
+            </div>
+              <div style={{backgroundColor: '#ccc'}}>
+              <Map ref='map' center={[41.38879, 2.15899]}
+        onClick={this.addMarker}
+      zoom={15}
+      >
+        <TileLayer
+          url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png"
+          attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+
+            {this.state.markers.map((position, idx) => 
+              <Marker key={`marker-${idx}`} position={position}>
+              </Marker>
+            )}
+            </Map>
+            </div>
           </div>
-          <div className="row">
-          <Map ref='map' center={[41.38879, 2.15899]}
-            onClick={this.addMarker}
-            zoom={15}
-          >
-            <TileLayer
-              url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png"
-              attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Map ref='map' position={[41.38879, 2.15899]} />
-            {/* <MarkerLayer
-              markers={this.markers}
-              longitudeExtractor={m => m.position.lng}
-              latitudeExtractor={m => m.position.lat} /> */}
-          </Map>
-        </div>
+
+
+
           <div className="col">
             {myRideDetails != null ? (
               <div className="text-info mb-3">
@@ -122,9 +128,10 @@ export default class MyRides extends Component {
             ) : (
               <div></div>
             )}
+          </div> 
           </div>
         </div>
-      </div>
+
     );
   }
 }
