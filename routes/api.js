@@ -59,7 +59,7 @@ router.get("/usersrides/:user_id", userExistsParams, async (req, res) => {
   const { user_id } = req.params;
   try {
     const results = await db(
-      `select distinct title, description, startdate, startpoint, terraintype, difficulty, lengthinkm, iscompleted, rides.id as ride_id, createdby from users_rides inner join users on users_rides.user_id=users.id inner join rides on users_rides.ride_id=rides.id where users.id='${user_id}' and rides.iscompleted=0;`
+      `select distinct title, description, startdate, startpoint, lat, lng, terraintype, difficulty, lengthinkm, iscompleted, rides.id as ride_id, createdby from users_rides inner join users on users_rides.user_id=users.id inner join rides on users_rides.ride_id=rides.id where users.id='${user_id}' and rides.iscompleted=0;`
     );
     // if (!results.data.length) return res.send({});
     res.send(results.data);
