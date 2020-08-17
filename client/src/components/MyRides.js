@@ -1,10 +1,16 @@
 import React, { Component } from "react";
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import MarkerLayer from "react-leaflet-marker-layer";
+import "./MyRides.css";
+
+const OCD_API_KEY = process.env.REACT_APP_KEY;
 
 export default class MyRides extends Component {
   constructor(props) {
     super(props);
     this.state = {
       myRideDetails: null,
+      markers:[]
     };
   }
 
@@ -25,6 +31,11 @@ export default class MyRides extends Component {
       myRideDetails: null,
     });
   }
+
+  addMarker(){
+    const { markers } = this.state;
+    markers.push(latlng);
+  };
 
   render() {
     const { usersRides } = this.props;
@@ -56,6 +67,21 @@ export default class MyRides extends Component {
               );
             })}
           </div>
+          <div className="row">
+          <Map ref='map' center={[41.38879, 2.15899]}
+            onClick={this.addMarker}
+            zoom={15}
+          >
+            <TileLayer
+              url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png"
+              attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <MarkerLayer
+              markers={markers}
+              longitudeExtractor={m => m.position.lng}
+              latitudeExtractor={m => m.position.lat} />
+          </Map>
+        </div>
           <div className="col">
             {myRideDetails != null ? (
               <div className="text-info mb-3">

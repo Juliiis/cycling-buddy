@@ -24,13 +24,13 @@ class App extends React.Component {
   };
 
   addNewRide = async (newRide) => {
-    // console.log("adding new ride");
+    console.log("adding new ride");
 
     let parsedDesc = this.stringParse(newRide.description);
-    // console.log(parsedDesc);
+    console.log(parsedDesc);
     newRide.description = parsedDesc;
 
-    // console.log(JSON.stringify(newRide));
+    console.log(JSON.stringify(newRide));
 
     try {
       const result = await fetch("/api/rides", {

@@ -69,6 +69,8 @@ export default class createRide extends Component {
           <br />
         </div>
         <div className="row text-info">
+
+
           <div className="col">
             {rideCreated ? (
               <div className="mb-3">
@@ -173,8 +175,11 @@ export default class createRide extends Component {
               </form>
             )}
           </div>
+        
         </div>
+        
       </div>
+      
     );
   }
 }

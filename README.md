@@ -18,4 +18,8 @@
 
 ![UserFlow](./readmeFiles/userFlow.jpg)
 
+## Objectives
+
+Create a marker on a map indicating the sites with bicycle availability.
+
 _This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
