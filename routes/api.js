@@ -1,4 +1,5 @@
 var express = require("express");
+const opencage = require('opencage-api-client');
 var router = express.Router();
 const db = require("../model/helper");
 const bodyParser = require("body-parser");
@@ -6,6 +7,8 @@ const userExistsRideCreation = require("./guards/userExistsRideCreation");
 const rideExists = require("./guards/rideExists");
 const userExists = require("./guards/userExists");
 const userExistsParams = require("./guards/userExistsParams");
+
+const OPENCAGE_API_KEY = process.env.OPENCAGE_API_KEY;
 
 router.use(bodyParser.json()); //check what does this do
 
@@ -44,8 +47,10 @@ router.post("/rides", userExistsRideCreation, async (req, res) => {
     createdby,
   } = req.body;
   try {
+    const geocode = await opencage.geocode({ q: startpoint, key: OPENCAGE_API_KEY })
+    const { lat, lng } = geocode.results[0].geometry
     await db(
-      `insert into rides (startdate, startpoint, title, description, difficulty, terraintype, lengthinkm, createdBy) values ('${startdate}', '${startpoint}', '${title}', '${description}', '${difficulty}', '${terraintype}', ${lengthinkm}, ${createdby});`
+      `insert into rides (startdate, startpoint, title, description, difficulty, terraintype, lengthinkm, createdBy, lat, lng) values ('${startdate}', '${startpoint}', '${title}', '${description}', '${difficulty}', '${terraintype}', ${lengthinkm}, ${createdby}, ${lat}, ${lng});`
     );
     const results = await selectAllRides();
     res.status(201).send(results.data);
